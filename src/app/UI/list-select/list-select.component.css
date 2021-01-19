@@ -1,0 +1,12 @@
+form-groupp{
+  width:200px;
+  height:200px;
+  background:red;
+  margin:1em;
+}
+.mat-form-field-wrapper{
+
+  margin-bottom: -1.25em;
+  margin-top: 20px !important;;
+  margin-left: 4px !important;
+}

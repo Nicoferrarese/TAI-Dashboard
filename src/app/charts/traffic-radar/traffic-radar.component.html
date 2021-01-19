@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-title class="text-left pt-2" style="position: absolute; font-size: large; margin-top: 2px; margin-bottom: 0px">
+    {{title}}
+  </mat-card-title>
+
+  <div class="RadarContainer" style="position: relative; height:32vh; width:31vw">
+    <canvas baseChart
+            [datasets]="radarChartData"
+            [options]="radarChartOptions"
+            [legend]="radarChartLegend"
+            [labels]="radarChartLabels"
+            [chartType]="radarChartType">
+    </canvas>
+  </div>
+</mat-card>

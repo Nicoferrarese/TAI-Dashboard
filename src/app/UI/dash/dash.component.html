@@ -1,0 +1,43 @@
+
+  <app-list-select></app-list-select>
+  <div class="grid-container">
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="{{ (cardLayout | async )?.rHeight }}px">
+    <!--Mini Cards LEFT TOP-->
+    <mat-grid-tile *ngFor="let i of [1]"
+                   [colspan]="( cardLayout | async )?.MiniCard?.cols"
+                   [rowspan]="( cardLayout | async )?.MiniCard?.rows">
+      <app-usage-card *ngIf="i === 1"title="Actual load"></app-usage-card>
+    </mat-grid-tile>
+    <!-- Radar -->
+    <mat-grid-tile [colspan]="( cardLayout | async )?.UsageRadar?.cols"
+                   [rowspan]="( cardLayout | async )?.UsageRadar?.rows">
+        <app-traffic-radar title="Traffic"></app-traffic-radar>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="( cardLayout | async )?.UsageRadar?.cols"
+                   [rowspan]="( cardLayout | async )?.UsageRadar?.rows">
+      <app-use-radar title="Light Intensity"></app-use-radar>
+    </mat-grid-tile>
+    <!--Mini Cards LEFT BOTTOM-->
+    <mat-grid-tile *ngFor="let i of [3]"
+                   [colspan]="( cardLayout | async )?.MiniCard?.cols"
+                   [rowspan]="( cardLayout | async )?.MiniCard?.rows">
+      <app-show-car *ngIf="i === 3" title="Actual veichles">
+      </app-show-car>
+
+    </mat-grid-tile>
+    <!----------------------------------->
+    <!-- Linee -->
+    <mat-grid-tile [colspan]="( cardLayout | async )?.UsageChart?.cols"
+                   [rowspan]="( cardLayout | async )?.UsageChart?.rows">
+        <app-use-line [chartData]="" title="Road Usage Overview">
+        </app-use-line>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="5"
+                   [rowspan]="2">
+
+        <app-light-line [chartData]="" title="Light Intensity Overview">
+        </app-light-line>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

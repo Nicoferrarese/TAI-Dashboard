@@ -1,0 +1,70 @@
+<mat-card class="m-2">
+
+  <form [formGroup]="frmOptions" (ngSubmit)="SendToService(frmOptions.value)">
+      <div class="form-row align-items-end ">
+        <div class="col-auto my-1 " >
+          <label for="email">Choose Resolution:</label>
+          <select  id="email" formControlName="FilterNumber" type="email" class="custom-select mr-sm-2" required >
+            <option value="1">10 minutes</option>
+            <option value="2">30 minutes</option>
+            <option value="3">60 minutes</option>
+            <option value="4">4 Hours</option>
+            <option value="5">6 Hours</option>
+          </select>
+        </div>
+        <div class="col-auto my-1">
+          <label for="definizione">Number Max Auto:</label>
+          <select  id="definizione" formControlName="MaxNumber" type="email" class="form-control mr-sm-2" required >
+            <option>40</option>
+            <option>60</option>
+            <option>70</option>
+            <option>80</option>
+            <option>100</option>
+          </select>
+        </div>
+        <div class="col-auto my-1" >
+          <label class="d-block">Time Frame:</label>
+            <input class="form-check-input" style="margin-top: 13px; margin-left: -1px" type="radio" name="xyz" id="hour_selected" value="option1" checked>
+            <select  id="hour" formControlName="Hour" type="email" class="form-control ml-3" required >
+              <option value="1">Last Hour</option>
+              <option value="2">Last 2 Hours</option>
+              <option value="3">Last 3 Hours</option>
+              <option value="4">Last 4 Hours</option>
+              <option value="5">Last 5 Hours</option>
+            </select>
+        </div>
+       <div class="col-auto my-1">
+         <input class="form-check-input col-auto" style="margin-top: -24px;margin-left: 19px; margin-right: 10px" type="radio" name="xyz" id="period_selected" value="option2">
+
+       </div>
+        <div class="col-auto my-1 ml-4 " >
+          <mat-form-field class="custom"  >
+            <mat-label>Enter a date range</mat-label>
+                 <mat-date-range-input [rangePicker]="picker" >
+                   <input matStartDate formControlName="DateSelectedStart" placeholder="Start date">
+                   <input matEndDate  formControlName="DateSelectedFinish"placeholder="End date">
+                 </mat-date-range-input>
+                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                 <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div class="Category_select col-auto col-auto my-1" >
+          <label for="cat">Category:</label>
+          <select #myselect (change)="SendToServiceRadar(myselect.value)"
+                  id="cat" formControlName="Category" type="email" class="custom-select mr-sm-2" required >
+            <option value="1">Cat 1</option>
+            <option value="2">Cat 2</option>
+            <option value="3">Cat 3</option>
+            <option value="4">Cat 4</option>
+            <option value="5">Cat 5</option>
+            <option value="6">Cat 6</option>
+            <option value="7">Cat 7</option>
+          </select>
+        </div>
+        <div class="sumbit_Button col-auto col-auto my-1 " >
+          <button type="submit" class="btn btn-primary  mr-sm-2">Save</button>
+        </div>
+      </div>
+  </form>
+
+</mat-card>

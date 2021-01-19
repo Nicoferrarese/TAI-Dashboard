@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title class="text-left pt-2" style="position: absolute; font-size: large; margin-top: 2px; margin-bottom: 0px">
+    {{title}}
+  </mat-card-title>
+
+  <div class="RadarContainer" style="position: relative; height:32vh; width:31vw">
+    <form [formGroup]="frmOptions" (ngSubmit)="SendToServiceRadar(frmOptions.value)">
+      <div class="col-sm-3" style="position: absolute; margin-top: 5vh;padding-top: 1vh; padding-left: 0px">
+        <select #myselect (change)="SendToServiceRadar(myselect.value)"
+                id="email" formControlName="Category" type="email" class="custom-select mr-sm-2" required >
+          <option value="1">Cat 1</option>
+          <option value="2">Cat 2</option>
+          <option value="3">Cat 3</option>
+          <option value="4">Cat 4</option>
+          <option value="5">Cat 5</option>
+          <option value="6">Cat 6</option>
+          <option value="7">Cat 7</option>
+        </select>
+      </div>
+    </form>
+    <canvas baseChart
+            [datasets]="radarChartData"
+            [options]="radarChartOptions"
+            [legend]="radarChartLegend"
+            [labels]="radarChartLabels"
+            [chartType]="radarChartType">
+    </canvas>
+  </div>
+</mat-card>
