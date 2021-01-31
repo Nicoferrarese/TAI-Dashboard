@@ -12,7 +12,7 @@ import { take } from 'rxjs/operators';
 export class ServiceLine {
   private Sorgente = 'http://localhost:3000/measures';
   private Response !: Observable<Record[]> ;
-  public Usage = 0;
+  public Usage = [0, 0];
   public Category = '3';
   public ActualCars: number[] = [];
   // Parametri FORM
@@ -53,13 +53,14 @@ export class ServiceLine {
                           // @ts-ignore
         this.ActualCars[1] = (result[result.length - 1].measure.taiLane2NumberOfVehicles);
         // @ts-ignore
-        this.Usage = Math.trunc(( (this.ActualCars[0] + this.ActualCars[1]) / this.MaxVehicle) * 100);
+        this.Usage[0] = Math.trunc(( this.ActualCars[0]  / this.MaxVehicle) * 100);
+        this.Usage[1] = Math.trunc(( this.ActualCars[1]  / this.MaxVehicle) * 100);
         // @ts-ignore
         return result; }))
       .pipe(catchError(this.handleError));
     return this.Response;
   }
-  getUsage(): Observable<number>{
+  getUsage(): Observable<number[]>{
     return of(this.Usage);
   }
   getCars(): Observable<number[]>{
@@ -85,10 +86,10 @@ export class ServiceLine {
     for (let i = 0 ; i < segments; i++){
         const index = Number(i * this.GroupNumber);
         const GNumber = Number(this.GroupNumber);
-        if(index > (result.length - 1)) break;
+        if (index > (result.length - 1)) {break};
         // @ts-ignore
         TimeBetween = result[index].measure?.data?.getTime() - result[index + GNumber - 1].measure?.data?.getTime();
-        //console.log('Time between: ' + TimeBetween + ' index: ' + index + ' ->i: ' + i );
+        // console.log('Time between: ' + TimeBetween + ' index: ' + index + ' ->i: ' + i );
         let ToPush: Record = {
           measure: {
             data: new Date(result[index].measure.data.getTime() + (TimeBetween / 2)),
@@ -108,13 +109,9 @@ export class ServiceLine {
           // tslint:disable-next-line:max-line-length
           ToPush.measure?.LightLevel = ToPush.measure.LightLevel + result[index + g].measure.LightLevel;
         }
-        //console.log('1..');
         ToPush.measure.taiLane1NumberOfVehicles = ToPush.measure.taiLane1NumberOfVehicles / GNumber;
-        //console.log('2..');
         ToPush.measure.taiLane2NumberOfVehicles = ToPush.measure.taiLane2NumberOfVehicles / GNumber;
-       //console.log('3..');
         ToPush.measure.LightLevel = ToPush.measure.LightLevel / GNumber;
-        //console.log('4..');
         ToServe.push(ToPush);
     }
     console.log('serving..');

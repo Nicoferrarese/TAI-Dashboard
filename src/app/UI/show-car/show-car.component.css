@@ -1,15 +1,9 @@
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
 .dashboard-card {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  top: 0.5vh;
+  left: 0.5vw;
+  right: 0.5vw;
+  bottom: 0.5vh;
 }
 
 

@@ -8,7 +8,7 @@ import {ServiceLine} from '../dash/service/service.service';
 })
 export class UsageCardComponent implements OnInit {
 
-  Utilizzo = 0;
+  Utilizzo = [0, 0];
   color = 'success';
   // @ts-ignore
   @Input() title: string;
@@ -16,10 +16,14 @@ export class UsageCardComponent implements OnInit {
   ngOnInit(): void {
     setInterval( () =>
       this.configService.getUsage().subscribe(value => {
-        this.Utilizzo = value;
-        if (this.Utilizzo <= 75){ this.color = 'success'; }
-        if (this.Utilizzo > 75 && this.Utilizzo < 90 ){ this.color = 'warning'; }
-        if (this.Utilizzo >= 90  ){ this.color = 'danger'; }
+        this.Utilizzo[0] = value[0];
+        if (this.Utilizzo[0] <= 75){ this.color = 'success'; }
+        if (this.Utilizzo[0] > 75 && this.Utilizzo[0] < 90 ){ this.color = 'warning'; }
+        if (this.Utilizzo[0] >= 90  ){ this.color = 'danger'; }
+        this.Utilizzo[1] = value[1];
+        if (this.Utilizzo[1] <= 75){ this.color = 'success'; }
+        if (this.Utilizzo[1] > 75 && this.Utilizzo[1] < 90 ){ this.color = 'warning'; }
+        if (this.Utilizzo[1] >= 90  ){ this.color = 'danger'; }
       }), (3000));
   }
 

@@ -1,27 +1,29 @@
 
   <app-list-select></app-list-select>
   <div class="grid-container">
-  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="{{ (cardLayout | async )?.rHeight }}px">
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}"
+                 rowHeight="{{ (cardLayout | async)?.rHeight }}px"
+                  gutterSize="0px">
     <!--Mini Cards LEFT TOP-->
     <mat-grid-tile *ngFor="let i of [1]"
                    [colspan]="( cardLayout | async )?.MiniCard?.cols"
                    [rowspan]="( cardLayout | async )?.MiniCard?.rows">
-      <app-usage-card *ngIf="i === 1"title="Actual load"></app-usage-card>
+      <app-usage-card *ngIf="i === 1"title="Traffic Percentage"></app-usage-card>
     </mat-grid-tile>
     <!-- Radar -->
     <mat-grid-tile [colspan]="( cardLayout | async )?.UsageRadar?.cols"
                    [rowspan]="( cardLayout | async )?.UsageRadar?.rows">
-        <app-traffic-radar title="Traffic"></app-traffic-radar>
+        <app-traffic-radar title="Road Load (vehicle /hour)"></app-traffic-radar>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.UsageRadar?.cols"
                    [rowspan]="( cardLayout | async )?.UsageRadar?.rows">
-      <app-use-radar title="Light Intensity"></app-use-radar>
+      <app-use-radar title="Road Light Level"></app-use-radar>
     </mat-grid-tile>
     <!--Mini Cards LEFT BOTTOM-->
     <mat-grid-tile *ngFor="let i of [3]"
                    [colspan]="( cardLayout | async )?.MiniCard?.cols"
                    [rowspan]="( cardLayout | async )?.MiniCard?.rows">
-      <app-show-car *ngIf="i === 3" title="Actual veichles">
+      <app-show-car *ngIf="i === 3" title="Actual vehicles/h">
       </app-show-car>
 
     </mat-grid-tile>

@@ -1,0 +1,42 @@
+<div class="small-table">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="taiLane1NumberOfVehicles">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Direction 1 vehicles/h</th>
+      <td mat-cell *matCellDef="let row">{{row.measure.taiLane1NumberOfVehicles}}</td>
+    </ng-container>
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="taiLane2NumberOfVehicles">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Direction 2 vehicles/h</th>
+      <td mat-cell *matCellDef="let row">{{row.measure.taiLane2NumberOfVehicles}}</td>
+    </ng-container>
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="LightLevel">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Light Level Lux/m^2</th>
+      <td mat-cell *matCellDef="let row">{{row.measure.LightLevel}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="data">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.measure.data.getDay()   +'/'+
+                                            row.measure.data.getMonth() +'/'+
+                                            row.measure.data.getFullYear()  +' '+
+                                            row.measure.data.getHours() +':'+
+                                            row.measure.data.getMinutes()}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataLenght"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>

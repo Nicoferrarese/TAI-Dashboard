@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ServiceLine} from '../dash/service/service.service';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ThemePalette} from '@angular/material/core';
 @Component({
   selector: 'app-list-select',
   templateUrl: './list-select.component.html',
@@ -11,17 +12,39 @@ import { FormBuilder, FormGroup} from '@angular/forms';
 export class ListSelectComponent implements OnInit {
   selectedValue = '';
   frmOptions!: FormGroup;
-
+  @ViewChild('picker') picker: any;
+  public hidden = true;
+  public date!: moment.Moment;
+  public disabled = false;
+  public showSpinners = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
+  public stepHour = 1;
+  public stepMinute = 15;
+  public stepMinutes = [0o0, 15, 30, 45];
+  public maxDate = new Date();
+  public stepSecond = 1;
+  public color: ThemePalette = 'primary';
+  public dateControl = new FormControl(new Date());
   // tslint:disable-next-line:variable-name
   constructor(public service: ServiceLine, public _fb: FormBuilder ) {  }
   ngOnInit(): void {
+    let StarterDate = new Date();
+    let FinishDate = new Date();
+
+    if (FinishDate.getMinutes() > 45) {FinishDate.setMinutes(45, 0, 0); }
+    else if (FinishDate.getMinutes() >= 30 && FinishDate.getMinutes() < 45 ) { FinishDate.setMinutes(30, 0, 0); }
+    else if (FinishDate.getMinutes() >= 15 && FinishDate.getMinutes() < 30 ) { FinishDate.setMinutes(15, 0, 0); }
+    else { FinishDate.setMinutes(0, 0, 0); }
+    StarterDate.setHours(FinishDate.getHours() - 3, FinishDate.getMinutes());
     this.frmOptions = this._fb.group({
       FilterNumber: '2',
       MaxNumber: '60',
       Hour: '3',
-      DateSelectedFinish: '',
-      DateSelectedStart: '',
-      Category: '3'
+      DateSelectedFinish: FinishDate,
+      DateSelectedStart: StarterDate,
+      Category: '3',
     });
     }
   SendToService(value: any): void{
@@ -29,5 +52,9 @@ export class ListSelectComponent implements OnInit {
   }
   SendToServiceRadar(value: any): void{
     this.service.PushDataRadar(value);
+  }
+  noClick(): void{
+    if (this.hidden === false){ this.hidden = true; }
+    else {this.hidden = false; }
   }
 }

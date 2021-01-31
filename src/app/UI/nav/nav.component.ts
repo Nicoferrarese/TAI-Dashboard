@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-  menuItems = ['dashboard', 'log'];
+  menuItems = ['Dashboard', 'View Full Log'];
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
