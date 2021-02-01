@@ -17,14 +17,14 @@ export class LightLineComponent implements OnInit {
   constructor(private api: ServiceLine){}
   public lineChartData: ChartDataSets[] = [
     {
-      label: '',
+      label: 'Luminance (Lux/m^2)',
       data: []
     }];
   public lineChartLabels: Label[] = [];
   public lineChartOptions: ChartOptions = {
     responsive: true,
     legend: {
-      display: false
+      display: true
     },
     maintainAspectRatio: false,
     animation: {
@@ -68,7 +68,10 @@ export class LightLineComponent implements OnInit {
               else{
                 minutes = '' +  li.measure?.data?.getMinutes();
               }
-              this.lineChartLabels.push(li.measure?.data?.getHours() + ':' + minutes);
+              this.lineChartLabels.push(li.measure.data.getDay() + '/' +
+                                        li.measure.data.getMonth() + '/' +
+                                        li.measure.data.getFullYear()  + ' ' +
+                                        li.measure?.data?.getHours() + ':' + minutes);
             }
           );
         }

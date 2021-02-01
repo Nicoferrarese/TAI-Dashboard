@@ -75,8 +75,7 @@
           <div class="Road Definition col-auto my-1  " >
             <mat-form-field  appearance="fill">
               <mat-label>Road Definition: </mat-label>
-              <mat-select #myselect (change)="SendToServiceRadar(myselect.value)"
-                          formControlName="MaxVehicles" class="mr-sm-2" >
+              <mat-select formControlName="MaxVehicles" class="mr-sm-2" >
                 <mat-option value="50">50 vehic/h</mat-option>
                 <mat-option value="100">100 vehic/h</mat-option>
                 <mat-option value="200">200 vehic/h</mat-option>
@@ -89,8 +88,7 @@
           <div class="Category_select col-auto my-1  " >
             <mat-form-field  appearance="fill">
               <mat-label for="cat">Road Category:</mat-label>
-              <mat-select #myselect (change)="SendToServiceRadar(myselect.value)"
-                          id="cat" formControlName="Category" type="email" class="mr-sm-2" >
+              <mat-select formControlName="Category" type="email" class="mr-sm-2" >
                 <mat-option value="1">Cat 1</mat-option>
                 <mat-option value="2">Cat 2</mat-option>
                 <mat-option value="3">Cat 3</mat-option>

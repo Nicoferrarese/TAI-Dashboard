@@ -51,9 +51,6 @@ export class ListSelectComponent implements OnInit {
   SendToService(value: any): void{
     this.service.PushData(value);
   }
-  SendToServiceRadar(value: any): void{
-    this.service.PushDataRadar(value);
-  }
   noClick(): void{
     if (this.hidden === false){ this.hidden = true; }
     else {this.hidden = false; }

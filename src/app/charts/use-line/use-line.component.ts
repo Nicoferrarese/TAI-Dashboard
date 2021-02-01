@@ -71,7 +71,10 @@ export class UseLineComponent implements OnInit {
               else{
                 minutes = '' +  li.measure?.data?.getMinutes();
               }
-              this.lineChartLabels.push(li.measure?.data?.getHours() + ':' + minutes);
+              this.lineChartLabels.push(  li.measure.data.getDay() + '/' +
+                                          li.measure.data.getMonth() + '/' +
+                                          li.measure.data.getFullYear()  + ' ' +
+                                          li.measure?.data?.getHours() + ':' + minutes);
             }
           );
         }

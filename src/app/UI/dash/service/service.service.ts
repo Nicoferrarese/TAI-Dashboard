@@ -16,7 +16,7 @@ export class ServiceLine {
   private Response !: Observable<Record[]> ;
   public Usage = [0, 0];
   public ActualCars: number[] = [];
-  public StartDate = new Date();
+  public StartDate = new Date(2020,10,1);
   public EndDate = new Date();
   // Parametri FORM, Quelli sotto assegnati sono da intendersi valori di partenza
   public Category = '3';
@@ -53,6 +53,8 @@ export class ServiceLine {
         result = this.NormalizeRecord(result);
         this.ActualCars[0] = (result[result.length - 1].measure.taiLane1NumberOfVehicles);
         this.ActualCars[1] = (result[result.length - 1].measure.taiLane2NumberOfVehicles);
+        this.ActualCars[2] = this.MaxVehicles;
+        console.log('cars: ' + this.ActualCars + ' Mv: ' + this.MaxVehicles);
         this.Usage[0] = Math.trunc(( this.ActualCars[0]  / this.MaxVehicles) * 100);
         this.Usage[1] = Math.trunc(( this.ActualCars[1]  / this.MaxVehicles) * 100);
         this.updatedCarNumber.emit('updated');
@@ -64,8 +66,12 @@ export class ServiceLine {
     return of(this.Usage);
   }
   getCars(): Observable<number[]>{
-    this.ActualCars[2] = this.MaxVehicles;
     return of(this.ActualCars);
+  }
+  SendToServiceMaxCar(cars: number): void{
+    this.updatedCarNumber.emit('updated');
+    console.log('recieved: ' + cars);
+    this.MaxVehicles = cars;
   }
   public PushData(data: any): void{
     this.updated.emit('updated');
@@ -77,7 +83,7 @@ export class ServiceLine {
       case ('3h'):  this.RecordGroupTime = 60 * 3; break;
     }
     this.Category = data.Category;
-    this.MaxVehicles = Number(data.MaxNumber);
+    this.MaxVehicles = Number(data.MaxVehicles);
     this.StartDate = new Date(data.DateSelectedStart);
     this.EndDate = new Date(data.DateSelectedFinish);
   }
