@@ -61,28 +61,28 @@
           </div>
           <div class="col-auto my-1 " >
             <mat-form-field  appearance="fill" floatLabel= "always">
-              <mat-label for="email">Time interval:</mat-label>
-              <mat-select  id="email" formControlName="FilterNumber" type="email" class=" mr-sm-2"  >
-                <mat-option value="1">10 minutes</mat-option>
-                <mat-option value="2">30 minutes</mat-option>
-                <mat-option value="3">60 minutes</mat-option>
-                <mat-option value="4">2 Hours</mat-option>
-                <mat-option value="5">3 Hours</mat-option>
+              <mat-label>Time interval:</mat-label>
+              <mat-select formControlName="Record_Group_Time" class=" mr-sm-2"  >
+                <mat-option value="10m">10 minutes</mat-option>
+                <mat-option value="30m">30 minutes</mat-option>
+                <mat-option value="60m">60 minutes</mat-option>
+                <mat-option value="2h">2 Hours</mat-option>
+                <mat-option value="3h">3 Hours</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
 
           <div class="Road Definition col-auto my-1  " >
             <mat-form-field  appearance="fill">
-              <mat-label for="cat">Road Definition: </mat-label>
+              <mat-label>Road Definition: </mat-label>
               <mat-select #myselect (change)="SendToServiceRadar(myselect.value)"
-                          id="MaxNumber" formControlName="Category" type="email" class="mr-sm-2" >
-                <mat-option value="1">30 veich/h</mat-option>
-                <mat-option value="2">40 veich/h</mat-option>
-                <mat-option value="3">50 veich/h</mat-option>
-                <mat-option value="4">60 veich/h</mat-option>
-                <mat-option value="6">70 veich/h</mat-option>
-                <mat-option value="7">80 veich/h</mat-option>
+                          formControlName="MaxVehicles" class="mr-sm-2" >
+                <mat-option value="30">30 vehic/h</mat-option>
+                <mat-option value="40">40 vehic/h</mat-option>
+                <mat-option value="50">50 vehic/h</mat-option>
+                <mat-option value="60">60 vehic/h</mat-option>
+                <mat-option value="70">70 vehic/h</mat-option>
+                <mat-option value="80">80 vehic/h</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -91,7 +91,7 @@
               <mat-label for="cat">Road Category:</mat-label>
               <mat-select #myselect (change)="SendToServiceRadar(myselect.value)"
                           id="cat" formControlName="Category" type="email" class="mr-sm-2" >
-                <mat-option value="1">Cat 1 (30 veich/h)</mat-option>
+                <mat-option value="1">Cat 1</mat-option>
                 <mat-option value="2">Cat 2</mat-option>
                 <mat-option value="3">Cat 3</mat-option>
                 <mat-option value="4">Cat 4</mat-option>

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ServiceLine} from '../dash/service/service.service';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-show-car',
@@ -15,21 +16,25 @@ export class ShowCarComponent implements OnInit {
   color = 'success';
   // @ts-ignore
   @Input() title: string;
-  constructor(private configService: ServiceLine) { }
+  constructor(private api: ServiceLine) { }
   ngOnInit(): void {
-    setInterval( () =>
-      this.configService.getCars().subscribe(value => {
-        this.N_auto1 = value[0];
-        this.N_auto2 = value[1];
-        value[2] = value[2] / 2;
-        if (this.N_auto1 <= (0.75 * value[2])){ this.color = 'success'; }
-        if (this.N_auto1 >  (0.75 * value[2]) && this.N_auto1 < (0.90 * value[2]) ){ this.color = 'warning'; }
-        if (this.N_auto1 >= (0.90 * value[2])){ this.color = 'danger'; }
-
-        if (this.N_auto2 <= (0.75 * value[2])){ this.color = 'success'; }
-        if (this.N_auto2 >  (0.75 * value[2]) && this.N_auto2 < (0.90 * value[2]) ){ this.color = 'warning'; }
-        if (this.N_auto2 >= (0.90 * value[2])){ this.color = 'danger'; }
-      }), (3000));
+    this.api.updatedCarNumber.subscribe(() => {
+      this.Fill();
+    });
+    console.log('i fill');
   }
+  public Fill(): void{
+    this.api.getCars().subscribe(value => {
+      this.N_auto1 = value[0];
+      this.N_auto2 = value[1];
+      value[2] = value[2] / 2;
+      if (this.N_auto1 <= (0.75 * value[2])){ this.color = 'success'; }
+      if (this.N_auto1 >  (0.75 * value[2]) && this.N_auto1 < (0.90 * value[2]) ){ this.color = 'warning'; }
+      if (this.N_auto1 >= (0.90 * value[2])){ this.color = 'danger'; }
 
+      if (this.N_auto2 <= (0.75 * value[2])){ this.color = 'success'; }
+      if (this.N_auto2 >  (0.75 * value[2]) && this.N_auto2 < (0.90 * value[2]) ){ this.color = 'warning'; }
+      if (this.N_auto2 >= (0.90 * value[2])){ this.color = 'danger'; }
+    });
+  }
 }

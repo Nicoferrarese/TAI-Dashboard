@@ -5,6 +5,8 @@ import { MatTable } from '@angular/material/table';
 import { LogTableDataSource} from './log-table-datasource';
 import { Record } from '../dash/service/line-data';
 import {LogServiceService} from '../log-service/log-service.service';
+import {interval} from 'rxjs';
+import {ServiceLine} from '../dash/service/service.service';
 
 @Component({
   selector: 'app-log-table',
@@ -24,8 +26,24 @@ export class LogTableComponent implements AfterViewInit, OnInit {
                       'taiLane1NumberOfVehicles', // ];
                       'taiLane2NumberOfVehicles' ,
                       'LightLevel' ];
-  constructor(private Service: LogServiceService) {}
+  constructor(private Service: LogServiceService, private api: ServiceLine) {}
   ngOnInit(): void {
+    this.api.updated.subscribe(() => {
+      this.FillTable();
+    });
+    this.FillTable();
+    // aggiorno solo al cambio impostazioni, facilita fruizione dati.
+    // interval(1000 * 30).subscribe( x => {
+    //     this.FillTable();
+    //   }
+    // );
+  }
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
+  }
+  FillTable(): void{
     this.dataSource = new LogTableDataSource(this.Service);
     this.Service.getRecordCount().subscribe({
       next: Item => {
@@ -33,10 +51,5 @@ export class LogTableComponent implements AfterViewInit, OnInit {
       },
       error: err => this.errorMessage = err
     });
-  }
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
   }
 }

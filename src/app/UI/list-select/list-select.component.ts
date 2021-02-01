@@ -1,7 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { ServiceLine} from '../dash/service/service.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
+
 @Component({
   selector: 'app-list-select',
   templateUrl: './list-select.component.html',
@@ -10,6 +11,7 @@ import {ThemePalette} from '@angular/material/core';
 
 
 export class ListSelectComponent implements OnInit {
+
   selectedValue = '';
   frmOptions!: FormGroup;
   @ViewChild('picker') picker: any;
@@ -39,11 +41,10 @@ export class ListSelectComponent implements OnInit {
     else { FinishDate.setMinutes(0, 0, 0); }
     StarterDate.setHours(FinishDate.getHours() - 3, FinishDate.getMinutes());
     this.frmOptions = this._fb.group({
-      FilterNumber: '2',
-      MaxNumber: '60',
-      Hour: '3',
       DateSelectedFinish: FinishDate,
       DateSelectedStart: StarterDate,
+      Record_Group_Time: '10m',
+      MaxVehicles: '60',
       Category: '3',
     });
     }

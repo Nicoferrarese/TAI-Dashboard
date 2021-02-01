@@ -4,6 +4,7 @@ import { Label } from 'ng2-charts';
 import {ServiceLine} from '../../UI/dash/service/service.service';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Record} from '../../UI/dash/service/line-data';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-use-radar',
@@ -28,52 +29,31 @@ export class UseRadarComponent implements OnInit {
   ];
   public radarChartType: ChartType = 'radar';
   public radarChartLegend = false;
-  constructor(private api: ServiceLine, public _fb: FormBuilder ){}
+  constructor(private api: ServiceLine ){}
   public arrayRecord: Record[] = [];
   ngOnInit(): void {
-    this.frmOptions = this._fb.group({
-      Category: '3'
+    this.api.updated.subscribe(() => {
+      this.FillGraph();
     });
-    // -----------
-    this.api.getLineGraphData().subscribe({
-      next: Item => {
-        this.arrayRecord = Item;
-        this.arrayRecord.forEach(li => {
-            // @ts-ignore
-            this.radarChartData[0].data.push(li.measure?.LightLevel);
-            // @ts-ignore
-            // this.radarChartData[1].data.push(li.measure?.taiLane1NumberOfVehicles + li.measure?.taiLane2NumberOfVehicles);
-            // @ts-ignore
-            this.radarChartLabels.push(li.measure?.data?.getHours() + ':' + li.measure?.data?.getMinutes());
-          }
-        );
+    this.FillGraph();
+    interval(1000 * 30).subscribe( x => {
+        this.FillGraph();
       }
-    });
-    // -----------
-    setInterval( () =>
-      this.api.getLineGraphData().subscribe({
-          next: Item => {
-            this.radarChartData[0].data = [];
-            // this.radarChartData[1].data = [];
-            this.radarChartLabels = [];
-            this.arrayRecord = Item;
-            this.arrayRecord.forEach(li => {
-                // @ts-ignore
-                this.radarChartData[0].data.push(li.measure?.LightLevel);
-                // @ts-ignore
-                // this.radarChartData[1].data.push(li.measure?.taiLane1NumberOfVehicles + li.measure?.taiLane2NumberOfVehicles);
-              // @ts-ignore
-              // this.radarChartData[0].data.push(li.measure?.applicableCategory3LightLevel);
-              // @ts-ignore
-                this.radarChartLabels.push(li.measure?.data?.getHours() + ':' + li.measure?.data?.getMinutes());
-              }
-            );
-          }
+    );
+  }
+  public FillGraph(): void{ // -----------
+    this.api.getLineGraphData().subscribe({
+        next: Item => {
+          this.radarChartData[0].data = [];
+          this.radarChartLabels = [];
+          this.arrayRecord = Item;
+          this.arrayRecord.forEach(li => {
+              this.radarChartData[0].data?.push(li.measure?.LightLevel);
+              this.radarChartLabels.push(li.measure?.data?.getHours() + ':' + li.measure?.data?.getMinutes());
+            }
+          );
         }
-      ), (1000));
+      }
+    );
   }
-  SendToServiceRadar(value: any): void{
-    this.api.PushDataRadar(value);
-  }
-
 }

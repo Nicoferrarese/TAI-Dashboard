@@ -4,6 +4,7 @@ import { Color, Label } from 'ng2-charts';
 import { Record } from '../../UI/dash/service/line-data';
 import { ServiceLine} from '../../UI/dash/service/service.service';
 import 'chartjs-plugin-streaming';
+import {interval} from 'rxjs';
 
 
 @Component({
@@ -43,54 +44,36 @@ export class LightLineComponent implements OnInit {
   @Input() title = '';
 
   ngOnInit(): void {
-    // -----------
-    this.api.getLineGraphData().subscribe({
-      next: Item => {
-        this.arrayRecord = Item;
-        this.arrayRecord.forEach(li => {
-            // @ts-ignore
-            this.lineChartData[0].data.push(li.measure?.LightLevel);
-            // @ts-ignore
-            let minutes = '';
-            // @ts-ignore
-            if (li.measure?.data?.getMinutes() < 10){
-              minutes = '0' + li.measure?.data?.getMinutes();
-            }
-            else{
-              minutes = '' +  li.measure?.data?.getMinutes();
-            }
-            // @ts-ignore
-            this.lineChartLabels.push(li.measure?.data?.getHours() + ':' + minutes);
-          }
-        );
-      }
+    this.api.updated.subscribe(() => {
+      this.FillGraph();
     });
-    // -----------
-    setInterval( () =>
-      this.api.getLineGraphData().subscribe({
-          next: Item => {
-            this.lineChartData[0].data = [];
-            this.lineChartLabels = [];
-            this.arrayRecord = Item;
-            this.arrayRecord.forEach(li => {
-                // @ts-ignore
-                this.lineChartData[0].data.push(li.measure.LightLevel);
-                let minutes = '';
-                // @ts-ignore
-                if (li.measure?.data?.getMinutes() < 10){
-                  minutes = '0' + li.measure?.data?.getMinutes();
-                }
-                else{
-                  minutes = '' +  li.measure?.data?.getMinutes();
-                }
-                // @ts-ignore
-                this.lineChartLabels.push(li.measure?.data?.getHours() + ':' + minutes);
-              }
-            );
-          }
-        }
-      ), (1000));
+    this.FillGraph();
+    interval(1000 * 30).subscribe( x => {
+        this.FillGraph();
+      }
+    );
   }
-
+  public FillGraph(): void{
+    let minutes: string;
+    this.api.getLineGraphData().subscribe({
+        next: Item => {
+          this.lineChartData[0].data = [];
+          this.lineChartLabels = [];
+          this.arrayRecord = Item;
+          this.arrayRecord.forEach(li => {
+              this.lineChartData[0].data?.push(li.measure.LightLevel);
+              if (li.measure?.data?.getMinutes() < 10){
+                minutes = '0' + li.measure?.data?.getMinutes();
+              }
+              else{
+                minutes = '' +  li.measure?.data?.getMinutes();
+              }
+              this.lineChartLabels.push(li.measure?.data?.getHours() + ':' + minutes);
+            }
+          );
+        }
+      }
+    );
+  }
 }
 
