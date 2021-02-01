@@ -15,14 +15,13 @@ export class ServiceLine {
   private Sorgente = 'http://localhost:3000/measures';
   private Response !: Observable<Record[]> ;
   public Usage = [0, 0];
-  public Category = '3';
   public ActualCars: number[] = [];
-  // Parametri FORM
-  public MaxVehicles = 70;  // Massimo numero veicoli
-  public StartDate = new Date(2019, 10, 1);
+  public StartDate = new Date();
   public EndDate = new Date();
-  public RecordGroupTime = 10;  // quanti record Raggruppare tra loro
-  public hours = 3;        // mostrare ultime X ore
+  // Parametri FORM, Quelli sotto assegnati sono da intendersi valori di partenza
+  public Category = '3';
+  public MaxVehicles = 200;  // Massimo numero veicoli
+  public RecordGroupTime = 10;  // minuti di raaggruppamento
   //
   constructor(private http: HttpClient) { }
   getLineGraphData(): Observable<Record[]> {
@@ -52,15 +51,11 @@ export class ServiceLine {
       .pipe(map (result => {
         result = this.SliceRecord(result);
         result = this.NormalizeRecord(result);
-        // @ts-ignore
         this.ActualCars[0] = (result[result.length - 1].measure.taiLane1NumberOfVehicles);
-                          // @ts-ignore
         this.ActualCars[1] = (result[result.length - 1].measure.taiLane2NumberOfVehicles);
-        // @ts-ignore
         this.Usage[0] = Math.trunc(( this.ActualCars[0]  / this.MaxVehicles) * 100);
         this.Usage[1] = Math.trunc(( this.ActualCars[1]  / this.MaxVehicles) * 100);
         this.updatedCarNumber.emit('updated');
-        // @ts-ignore
         return result; }))
       .pipe(catchError(this.handleError));
     return this.Response;
@@ -81,13 +76,10 @@ export class ServiceLine {
       case ('2h'):  this.RecordGroupTime = 60 * 2; break;
       case ('3h'):  this.RecordGroupTime = 60 * 3; break;
     }
-    this.MaxVehicles = data.MaxNumber;
-    this.hours      = data.Hour;
+    this.Category = data.Category;
+    this.MaxVehicles = Number(data.MaxNumber);
     this.StartDate = new Date(data.DateSelectedStart);
-  }
-  public PushDataRadar(data: any): void{
-    this.Category = data;
-    console.log('------------------> cat: ' + data);
+    this.EndDate = new Date(data.DateSelectedFinish);
   }
   public NormalizeRecord(result: Record[]): Record[]{
     const ToServe: Record[] = [];
@@ -114,7 +106,6 @@ export class ServiceLine {
         itemsInThisSection += 1;
         if ( index < 0 ) { index = 0; break; }
       }
-      console.log(itemsInThisSection);
       ToPush.measure.taiLane1NumberOfVehicles = Math.trunc(ToPush.measure.taiLane1NumberOfVehicles / itemsInThisSection);
       ToPush.measure.taiLane2NumberOfVehicles = Math.trunc(ToPush.measure.taiLane2NumberOfVehicles / itemsInThisSection);
       ToPush.measure.LightLevel = Math.trunc(ToPush.measure.LightLevel / itemsInThisSection);
@@ -123,7 +114,6 @@ export class ServiceLine {
       LastElementIndex = index;
       ToServe.unshift(ToPush);
     }
-    console.log(ToServe);
     return ToServe;
   }
 

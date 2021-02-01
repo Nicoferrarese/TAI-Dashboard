@@ -44,7 +44,7 @@ export class ListSelectComponent implements OnInit {
       DateSelectedFinish: FinishDate,
       DateSelectedStart: StarterDate,
       Record_Group_Time: '10m',
-      MaxVehicles: '60',
+      MaxVehicles: '200',
       Category: '3',
     });
     }
