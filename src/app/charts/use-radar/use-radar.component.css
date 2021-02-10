@@ -6,3 +6,18 @@ radar-chart {
   right: 0.5vw;
 }
 
+.dashboard-card-content {
+  text-align: center;
+  flex-grow: 1;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100%;
+  justify-content: center;
+
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { ChartDataSets, ChartOptions, ChartType, ChartXAxe} from 'chart.js';
+import { ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { Record } from '../../UI/dash/service/line-data';
 import { ServiceLine} from '../../UI/dash/service/service.service';
 import 'chartjs-plugin-streaming';
-import { FormBuilder , Validators } from '@angular/forms';
 import {interval} from 'rxjs';
 
 @Component({
@@ -15,8 +14,7 @@ import {interval} from 'rxjs';
 export class UseLineComponent implements OnInit {
   @Input() chartData: any;
   @Input() title = '';
-  constructor(private api: ServiceLine,
-              public FB: FormBuilder ){}
+  constructor(private api: ServiceLine){}
 
   public lineChartData: ChartDataSets[] = [
     {
@@ -49,7 +47,7 @@ export class UseLineComponent implements OnInit {
       this.FillGraph();
     });
     this.FillGraph();
-    interval(1000 * 30).subscribe( x => {
+    interval(1000 * 30).subscribe( () => {
           this.FillGraph();
         }
       );
@@ -63,18 +61,18 @@ export class UseLineComponent implements OnInit {
           this.lineChartLabels = [];
           this.arrayRecord = Item;
           this.arrayRecord.forEach(li => {
-              this.lineChartData[0].data?.push(li.measure.taiLane1NumberOfVehicles);
-              this.lineChartData[1].data?.push(li.measure.taiLane2NumberOfVehicles);
-              if (li.measure?.data?.getMinutes() < 10){
-                minutes = '0' + li.measure?.data?.getMinutes();
+              this.lineChartData[0].data?.push(li.taiLane1NumberOfVehicles);
+              this.lineChartData[1].data?.push(li.taiLane2NumberOfVehicles);
+              if (li.data?.getMinutes() < 10){
+                minutes = '0' + li.data?.getMinutes();
               }
               else{
-                minutes = '' +  li.measure?.data?.getMinutes();
+                minutes = '' +  li.data?.getMinutes();
               }
-              this.lineChartLabels.push(  li.measure.data.getDay() + '/' +
-                                          li.measure.data.getMonth() + '/' +
-                                          li.measure.data.getFullYear()  + ' ' +
-                                          li.measure?.data?.getHours() + ':' + minutes);
+              this.lineChartLabels.push(  li.data.getDay() + '/' +
+                                          li.data.getMonth() + '/' +
+                                          li.data.getFullYear()  + ' ' +
+                                          li.data?.getHours() + ':' + minutes);
             }
           );
         }

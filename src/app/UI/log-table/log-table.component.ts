@@ -5,7 +5,6 @@ import { MatTable } from '@angular/material/table';
 import { LogTableDataSource} from './log-table-datasource';
 import { Record } from '../dash/service/line-data';
 import {LogServiceService} from '../log-service/log-service.service';
-import {interval} from 'rxjs';
 import {ServiceLine} from '../dash/service/service.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class LogTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort ;
   @ViewChild(MatTable) table!: MatTable<Record>;
   dataSource!: LogTableDataSource;
-  dataLenght = 0;
+  dataLength = 0;
   errorMessage = 'hello';
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = [// 'measureTimestamp' ,
@@ -29,6 +28,9 @@ export class LogTableComponent implements AfterViewInit, OnInit {
   constructor(private Service: LogServiceService, private api: ServiceLine) {}
   ngOnInit(): void {
     this.api.updated.subscribe(() => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
       this.FillTable();
     });
     this.FillTable();
@@ -39,17 +41,20 @@ export class LogTableComponent implements AfterViewInit, OnInit {
     // );
   }
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    /*
+    * this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+    * */
   }
   FillTable(): void{
     this.dataSource = new LogTableDataSource(this.Service);
     this.Service.getRecordCount().subscribe({
       next: Item => {
-        this.dataLenght = Item;
+        this.dataLength = Item;
       },
       error: err => this.errorMessage = err
     });
+    // this.table.renderRows();
   }
 }

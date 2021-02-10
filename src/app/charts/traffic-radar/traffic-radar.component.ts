@@ -37,7 +37,7 @@ export class TrafficRadarComponent implements OnInit {
       this.FillGraph();
     });
     this.FillGraph();
-    interval(1000 * 30).subscribe( x => {
+    interval(1000 * 30).subscribe( () => {
         this.FillGraph();
       }
     );
@@ -50,9 +50,9 @@ public FillGraph(): void{
         this.radarChartLabels = [];
         this.arrayRecord = Item;
         this.arrayRecord.forEach(li => {
-            this.radarChartData[0].data?.push(li.measure?.taiLane1NumberOfVehicles);
-            this.radarChartData[1].data?.push(li.measure?.taiLane2NumberOfVehicles);
-            this.radarChartLabels.push(li.measure?.data?.getHours() + ':' + li.measure?.data?.getMinutes());
+            this.radarChartData[0].data?.push(li.taiLane1NumberOfVehicles);
+            this.radarChartData[1].data?.push(li.taiLane2NumberOfVehicles);
+            this.radarChartLabels.push(li.data?.getHours() + ':' + li.data?.getMinutes());
           }
         );
       }

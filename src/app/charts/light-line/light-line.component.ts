@@ -61,17 +61,17 @@ export class LightLineComponent implements OnInit {
           this.lineChartLabels = [];
           this.arrayRecord = Item;
           this.arrayRecord.forEach(li => {
-              this.lineChartData[0].data?.push(li.measure.LightLevel);
-              if (li.measure?.data?.getMinutes() < 10){
-                minutes = '0' + li.measure?.data?.getMinutes();
+              this.lineChartData[0].data?.push(li.LightLevel);
+              if (li.data?.getMinutes() < 10){
+                minutes = '0' + li.data?.getMinutes();
               }
               else{
-                minutes = '' +  li.measure?.data?.getMinutes();
+                minutes = '' +  li.data?.getMinutes();
               }
-              this.lineChartLabels.push(li.measure.data.getDay() + '/' +
-                                        li.measure.data.getMonth() + '/' +
-                                        li.measure.data.getFullYear()  + ' ' +
-                                        li.measure?.data?.getHours() + ':' + minutes);
+              this.lineChartLabels.push(li.data.getDay() + '/' +
+                                        li.data.getMonth() + '/' +
+                                        li.data.getFullYear()  + ' ' +
+                                        li.data?.getHours() + ':' + minutes);
             }
           );
         }

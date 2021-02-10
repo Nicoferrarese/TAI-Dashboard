@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { Overview} from '../../overview/overview';
-import { OverviewService } from '../../overview/overview.service';
 
 @Component({
   selector: 'app-dash',
@@ -35,8 +33,6 @@ export class DashComponent implements OnInit{
       }
     })
   );
-
-  miniCardData: Overview[] | undefined;
   constructor(private breakpointObserver: BreakpointObserver) {}
   ngOnInit(): void {}
 }

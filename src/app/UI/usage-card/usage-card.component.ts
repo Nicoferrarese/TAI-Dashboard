@@ -28,6 +28,6 @@ export class UsageCardComponent implements OnInit {
       if (this.Utilizzo[1] <= 75){ this.color = 'success'; }
       if (this.Utilizzo[1] > 75 && this.Utilizzo[1] < 90 ){ this.color = 'warning'; }
       if (this.Utilizzo[1] >= 90  ){ this.color = 'danger'; }
-    })
+    });
   }
 }

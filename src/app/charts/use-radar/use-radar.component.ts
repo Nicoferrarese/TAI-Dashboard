@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
-import {ServiceLine} from '../../UI/dash/service/service.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {Record} from '../../UI/dash/service/line-data';
-import {interval} from 'rxjs';
+import { ServiceLine } from '../../UI/dash/service/service.service';
+import { FormGroup } from '@angular/forms';
+import { Record } from '../../UI/dash/service/line-data';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-use-radar',
@@ -36,7 +36,7 @@ export class UseRadarComponent implements OnInit {
       this.FillGraph();
     });
     this.FillGraph();
-    interval(1000 * 30).subscribe( x => {
+    interval(1000 * 30).subscribe( () => {
         this.FillGraph();
       }
     );
@@ -48,8 +48,8 @@ export class UseRadarComponent implements OnInit {
           this.radarChartLabels = [];
           this.arrayRecord = Item;
           this.arrayRecord.forEach(li => {
-              this.radarChartData[0].data?.push(li.measure?.LightLevel);
-              this.radarChartLabels.push(li.measure?.data?.getHours() + ':' + li.measure?.data?.getMinutes());
+              this.radarChartData[0].data?.push(li.LightLevel);
+              this.radarChartLabels.push(li.data?.getHours() + ':' + li.data?.getMinutes());
             }
           );
         }

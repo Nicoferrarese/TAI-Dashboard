@@ -1,6 +1,6 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ServiceLine} from '../dash/service/service.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 
 @Component({
@@ -24,16 +24,15 @@ export class ListSelectComponent implements OnInit {
   public enableMeridian = false;
   public stepHour = 1;
   public stepMinute = 15;
-  public stepMinutes = [0o0, 15, 30, 45];
   public maxDate = new Date();
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
-  public dateControl = new FormControl(new Date());
+  // public dateControl = new FormControl(new Date());
   // tslint:disable-next-line:variable-name
   constructor(public service: ServiceLine, public _fb: FormBuilder ) {  }
   ngOnInit(): void {
-    let StarterDate = new Date();
-    let FinishDate = new Date();
+    const StarterDate = new Date();
+    const FinishDate = new Date();
 
     if (FinishDate.getMinutes() > 45) {FinishDate.setMinutes(45, 0, 0); }
     else if (FinishDate.getMinutes() >= 30 && FinishDate.getMinutes() < 45 ) { FinishDate.setMinutes(30, 0, 0); }
@@ -49,10 +48,9 @@ export class ListSelectComponent implements OnInit {
     });
     }
   SendToService(value: any): void{
-    this.service.PushData(value);
+    this.service.UpdateServiceValues(value);
   }
   noClick(): void{
-    if (this.hidden === false){ this.hidden = true; }
-    else {this.hidden = false; }
+    this.hidden = !this.hidden;
   }
 }
