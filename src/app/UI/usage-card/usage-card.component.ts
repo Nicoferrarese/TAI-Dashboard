@@ -10,6 +10,7 @@ export class UsageCardComponent implements OnInit {
 
   Utilizzo = [0, 0];
   color = 'success';
+
   // @ts-ignore
   @Input() title: string;
   constructor(private configService: ServiceLine) { }

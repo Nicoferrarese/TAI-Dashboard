@@ -18,10 +18,10 @@ export class UseLineComponent implements OnInit {
 
   public lineChartData: ChartDataSets[] = [
     {
-      label: 'Direction 1',
+      label: 'Direction 1 (veh/h)',
       data: []
     }, {
-      label: 'Direction 2',
+      label: 'Direction 2 (veh/h)',
       data: []
     }];
   public lineChartLabels: Label[] = [];

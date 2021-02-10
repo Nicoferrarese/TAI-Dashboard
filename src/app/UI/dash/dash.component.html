@@ -8,22 +8,22 @@
     <mat-grid-tile *ngFor="let i of [1]"
                    [colspan]="( cardLayout | async )?.MiniCard?.cols"
                    [rowspan]="( cardLayout | async )?.MiniCard?.rows">
-      <app-usage-card *ngIf="i === 1"title="Traffic Percentage"></app-usage-card>
+      <app-usage-card *ngIf="i === 1"title="Traffic percentage"></app-usage-card>
     </mat-grid-tile>
     <!-- Radar -->
     <mat-grid-tile [colspan]="( cardLayout | async )?.UsageRadar?.cols"
                    [rowspan]="( cardLayout | async )?.UsageRadar?.rows">
-        <app-traffic-radar title="Road Load (vehicle /hour)"></app-traffic-radar>
+        <app-traffic-radar title="Road load (veh/h)"></app-traffic-radar>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.UsageRadar?.cols"
                    [rowspan]="( cardLayout | async )?.UsageRadar?.rows">
-      <app-use-radar title="Road Light Level"></app-use-radar>
+      <app-use-radar title="Road light level (lux)"></app-use-radar>
     </mat-grid-tile>
     <!--Mini Cards LEFT BOTTOM-->
     <mat-grid-tile *ngFor="let i of [3]"
                    [colspan]="( cardLayout | async )?.MiniCard?.cols"
                    [rowspan]="( cardLayout | async )?.MiniCard?.rows">
-      <app-show-car *ngIf="i === 3" title="Actual vehicles/h">
+      <app-show-car *ngIf="i === 3" title="Actual load">
       </app-show-car>
 
     </mat-grid-tile>
@@ -31,13 +31,13 @@
     <!-- Linee -->
     <mat-grid-tile [colspan]="( cardLayout | async )?.UsageChart?.cols"
                    [rowspan]="( cardLayout | async )?.UsageChart?.rows">
-        <app-use-line [chartData]="" title="Road Usage Overview">
+        <app-use-line [chartData]="" title="Road load chart">
         </app-use-line>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="5"
                    [rowspan]="2">
 
-        <app-light-line [chartData]="" title="Light Intensity Overview">
+        <app-light-line [chartData]="" title="Road light level chart">
         </app-light-line>
 
     </mat-grid-tile>

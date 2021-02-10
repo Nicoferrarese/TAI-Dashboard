@@ -69,7 +69,7 @@ export class ServiceLine {
     this.StartDate = new Date(data.DateSelectedStart);
     this.EndDate = new Date(data.DateSelectedFinish);
 
-    this.Sorgente =  'http://localhost:8000/api/record/'  + this.StartDate.getTime() + '&'
+    this.Sorgente =  'http://localhost:8080/api/record/'  + this.StartDate.getTime() + '&'
       + this.EndDate.getTime() + '&'
       + this.RecordGroupTime;
   }

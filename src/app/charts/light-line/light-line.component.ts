@@ -17,7 +17,7 @@ export class LightLineComponent implements OnInit {
   constructor(private api: ServiceLine){}
   public lineChartData: ChartDataSets[] = [
     {
-      label: 'Luminance (Lux/m^2)',
+      label: 'Luminance (lux or cd/m^2)',
       data: []
     }];
   public lineChartLabels: Label[] = [];
