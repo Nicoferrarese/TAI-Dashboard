@@ -69,8 +69,9 @@ export class UseLineComponent implements OnInit {
               else{
                 minutes = '' +  li.data?.getMinutes();
               }
-              this.lineChartLabels.push(  li.data.getDay() + '/' +
-                                          li.data.getMonth() + '/' +
+              console.log('Data grafico: ' +  li.data + ' data unix :' + li.data.getTime() + ' day: ' + li.data.getDay());
+              this.lineChartLabels.push(  li.data.getDate() + '/' +
+                                          (li.data.getMonth() + 1) + '/' +
                                           li.data.getFullYear()  + ' ' +
                                           li.data?.getHours() + ':' + minutes);
             }

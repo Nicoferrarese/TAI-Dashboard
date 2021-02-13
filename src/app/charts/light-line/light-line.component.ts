@@ -23,6 +23,14 @@ export class LightLineComponent implements OnInit {
   public lineChartLabels: Label[] = [];
   public lineChartOptions: ChartOptions = {
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 120
+        }
+      }]
+    },
     legend: {
       display: true
     },
@@ -68,10 +76,10 @@ export class LightLineComponent implements OnInit {
               else{
                 minutes = '' +  li.data?.getMinutes();
               }
-              this.lineChartLabels.push(li.data.getDay() + '/' +
-                                        li.data.getMonth() + '/' +
-                                        li.data.getFullYear()  + ' ' +
-                                        li.data?.getHours() + ':' + minutes);
+              this.lineChartLabels.push(  li.data.getDate() + '/' +
+                                          (li.data.getMonth() + 1) + '/' +
+                                          li.data.getFullYear()  + ' ' +
+                                          li.data?.getHours()  + ':' + minutes);
             }
           );
         }

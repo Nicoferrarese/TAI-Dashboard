@@ -21,11 +21,11 @@
     <!-- Name Column -->
     <ng-container matColumnDef="data">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Stamp</th>
-      <td mat-cell *matCellDef="let row">{{ row.data.getDay()   +'/'+
-                                            row.data.getMonth() +'/'+
+      <td mat-cell *matCellDef="let row">{{ row.data.getDate()   +'/'+
+                                            (row.data.getMonth()+1) +'/'+
                                             row.data.getFullYear()  +' '+
                                             row.data.getHours() +':'+
-                                            row.data.getMinutes()}}
+                                            print_minutes(row.data.getMinutes())}}
       </td>
     </ng-container>
 

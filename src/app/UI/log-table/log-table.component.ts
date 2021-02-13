@@ -57,4 +57,8 @@ export class LogTableComponent implements AfterViewInit, OnInit {
     });
     // this.table.renderRows();
   }
+  public print_minutes(input: number): string{
+    if (input < 10) {return('0' + input); }
+    return input.toString();
+  }
 }

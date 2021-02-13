@@ -26,8 +26,9 @@ export class ServiceLine {
     this.Response = this.http.get<Record[]>(this.Sorgente)
       .pipe(map(result => {
         result.forEach(li => {
-          console.log('recieved: -> ' + li.measureTimestamp);
-          li.data = new Date(li.measureTimestamp);
+          console.log('recieved: -> ' + li.measure_timestamp);
+          li.data = new Date(li.measure_timestamp);
+          console.log(li.data);
           switch (this.Category){
               case ('1'): li.LightLevel = li.applicableCategory1LightLevel; break;
               case ('2'): li.LightLevel = li.applicableCategory2LightLevel; break;
@@ -69,9 +70,9 @@ export class ServiceLine {
     this.StartDate = new Date(data.DateSelectedStart);
     this.EndDate = new Date(data.DateSelectedFinish);
 
-    this.Sorgente =  'http://localhost:8080/api/record/'  + this.StartDate.getTime() + '&'
+    this.Sorgente = 'http://localhost:9998/timescale'; /*'http://localhost:8080/api/record/'  + this.StartDate.getTime() + '&'
       + this.EndDate.getTime() + '&'
-      + this.RecordGroupTime;
+      + this.RecordGroupTime;*/
   }
   /*
   public NormalizeRecord(result: Record[]): Record[]{

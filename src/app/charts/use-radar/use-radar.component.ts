@@ -16,6 +16,12 @@ export class UseRadarComponent implements OnInit {
   @Input() title = '';
   public radarChartOptions: ChartOptions = {
     responsive: true,
+    scale: {
+      ticks: {
+        suggestedMin: 0,
+        suggestedMax: 150
+      }
+    },
     maintainAspectRatio: false,
     animation: {
       duration: 0

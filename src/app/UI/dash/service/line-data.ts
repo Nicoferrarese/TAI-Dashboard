@@ -1,5 +1,6 @@
 export class Record{
-  measureTimestamp = 0;
+  // tslint:disable-next-line:variable-name
+  measure_timestamp = 0;
   data: Date | any;
   car = 0 ;
   taiLane1NumberOfVehicles = 0;
