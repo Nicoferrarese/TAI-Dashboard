@@ -55,11 +55,15 @@ export class UseRadarComponent implements OnInit {
           this.arrayRecord = Item;
           this.arrayRecord.forEach(li => {
               this.radarChartData[0].data?.push(li.LightLevel);
-              this.radarChartLabels.push(li.data?.getHours() + ':' + li.data?.getMinutes());
+              this.radarChartLabels.push(li.data?.getHours() + ':' + this.print_minutes(li.data?.getMinutes()));
             }
           );
         }
       }
     );
+  }
+  public print_minutes(input: number): string{
+    if (input < 10) {return('0' + input); }
+    return input.toString();
   }
 }

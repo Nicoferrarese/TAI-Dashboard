@@ -52,11 +52,15 @@ public FillGraph(): void{
         this.arrayRecord.forEach(li => {
             this.radarChartData[0].data?.push(li.taiLane1NumberOfVehicles);
             this.radarChartData[1].data?.push(li.taiLane2NumberOfVehicles);
-            this.radarChartLabels.push(li.data?.getHours() + ':' + li.data?.getMinutes());
+            this.radarChartLabels.push(li.data?.getHours() + ':' + this.print_minutes(li.data?.getMinutes()));
           }
         );
       }
     }
   );
+}
+public print_minutes(input: number): string{
+  if (input < 10) {return('0' + input); }
+  return input.toString();
 }
 }

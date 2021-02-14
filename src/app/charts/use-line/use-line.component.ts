@@ -53,7 +53,6 @@ export class UseLineComponent implements OnInit {
       );
   }
   public FillGraph(): void{
-    let minutes: string;
     this.api.getLineGraphData().subscribe({
         next: Item => {
           this.lineChartData[0].data = [];
@@ -63,22 +62,19 @@ export class UseLineComponent implements OnInit {
           this.arrayRecord.forEach(li => {
               this.lineChartData[0].data?.push(li.taiLane1NumberOfVehicles);
               this.lineChartData[1].data?.push(li.taiLane2NumberOfVehicles);
-              if (li.data?.getMinutes() < 10){
-                minutes = '0' + li.data?.getMinutes();
-              }
-              else{
-                minutes = '' +  li.data?.getMinutes();
-              }
-              console.log('Data grafico: ' +  li.data + ' data unix :' + li.data.getTime() + ' day: ' + li.data.getDay());
               this.lineChartLabels.push(  li.data.getDate() + '/' +
                                           (li.data.getMonth() + 1) + '/' +
                                           li.data.getFullYear()  + ' ' +
-                                          li.data?.getHours() + ':' + minutes);
+                                          li.data?.getHours() + ':' + this.print_minutes(li.data?.getMinutes()));
             }
           );
         }
       }
     );
+  }
+  public print_minutes(input: number): string{
+    if (input < 10) {return('0' + input); }
+    return input.toString();
   }
 }
 

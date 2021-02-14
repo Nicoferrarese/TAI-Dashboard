@@ -60,7 +60,7 @@ export class LogServiceService {
     return data.sort((a, b) => {
       const isAsc = direction === 'asc';
       switch (active) {
-         case 'taiLane1NumberOfVehicles': return compare(+a.measureTimestamp, +b.measureTimestamp, isAsc);
+         case 'taiLane1NumberOfVehicles': return compare(+a.measure_timestamp, +b.measure_timestamp, isAsc);
          case 'data': return compare(+a.data , +b.data, isAsc);
         default: return 0;
       }

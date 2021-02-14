@@ -27,24 +27,26 @@ export class ListSelectComponent implements OnInit {
   public maxDate = new Date();
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
-  // public dateControl = new FormControl(new Date());
   // tslint:disable-next-line:variable-name
   constructor(public service: ServiceLine, public _fb: FormBuilder ) {  }
   ngOnInit(): void {
+
     const StarterDate = new Date();
     const FinishDate = new Date();
-
+    const GroupTime = '30_minutes';
+    const car = '100';
+    const cat = '2';
     if (FinishDate.getMinutes() > 45) {FinishDate.setMinutes(45, 0, 0); }
     else if (FinishDate.getMinutes() >= 30 && FinishDate.getMinutes() < 45 ) { FinishDate.setMinutes(30, 0, 0); }
     else if (FinishDate.getMinutes() >= 15 && FinishDate.getMinutes() < 30 ) { FinishDate.setMinutes(15, 0, 0); }
     else { FinishDate.setMinutes(0, 0, 0); }
-    StarterDate.setHours(FinishDate.getHours() - 3, FinishDate.getMinutes());
+    StarterDate.setHours(FinishDate.getHours() - 24, FinishDate.getMinutes());
     this.frmOptions = this._fb.group({
       DateSelectedFinish: FinishDate,
       DateSelectedStart: StarterDate,
-      Record_Group_Time: '10m',
-      MaxVehicles: '200',
-      Category: '3',
+      Record_Group_Time: GroupTime,
+      MaxVehicles: car,
+      Category: cat,
     });
     }
   SendToService(value: any): void{

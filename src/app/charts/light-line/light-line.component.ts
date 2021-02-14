@@ -14,7 +14,10 @@ import {interval} from 'rxjs';
 })
 export class LightLineComponent implements OnInit {
   @Input() chartData: any;
-  constructor(private api: ServiceLine){}
+
+  constructor(private api: ServiceLine) {
+  }
+
   public lineChartData: ChartDataSets[] = [
     {
       label: 'Luminance (lux or cd/m^2)',
@@ -56,13 +59,13 @@ export class LightLineComponent implements OnInit {
       this.FillGraph();
     });
     this.FillGraph();
-    interval(1000 * 30).subscribe( x => {
+    interval(1000 * 30).subscribe(x => {
         this.FillGraph();
       }
     );
   }
-  public FillGraph(): void{
-    let minutes: string;
+
+  public FillGraph(): void {
     this.api.getLineGraphData().subscribe({
         next: Item => {
           this.lineChartData[0].data = [];
@@ -70,21 +73,18 @@ export class LightLineComponent implements OnInit {
           this.arrayRecord = Item;
           this.arrayRecord.forEach(li => {
               this.lineChartData[0].data?.push(li.LightLevel);
-              if (li.data?.getMinutes() < 10){
-                minutes = '0' + li.data?.getMinutes();
-              }
-              else{
-                minutes = '' +  li.data?.getMinutes();
-              }
-              this.lineChartLabels.push(  li.data.getDate() + '/' +
-                                          (li.data.getMonth() + 1) + '/' +
-                                          li.data.getFullYear()  + ' ' +
-                                          li.data?.getHours()  + ':' + minutes);
+              this.lineChartLabels.push(li.data.getDate() + '/' +
+                (li.data.getMonth() + 1) + '/' +
+                li.data.getFullYear() + ' ' +
+                li.data?.getHours() + ':' + this.print_minutes(li.data?.getMinutes()));
             }
           );
         }
       }
     );
   }
+  public print_minutes(input: number): string{
+    if (input < 10) {return('0' + input); }
+    return input.toString();
+  }
 }
-
